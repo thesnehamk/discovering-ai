@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Single-user local setup for now — no auth yet.
+// workExperience / education / skills stored as JSON for flexibility
+// during early iteration; can be normalized into their own tables later.
+model Profile {
+  id              String   @id @default(cuid())
+  fullName        String
+  email           String
+  phone           String?
+  location        String?
+  summary         String?
+  workExperience  Json     // [{ company, title, startDate, endDate, bullets: string[] }]
+  education       Json     // [{ school, degree, field, startDate, endDate }]
+  skills          String[] // flat list of skills
+  rawResumeText   String?  // full text extracted from an uploaded resume, if any
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  resumes GeneratedResume[]
+}
+
+model JobDescription {
+  id             String   @id @default(cuid())
+  sourceUrl      String
+  title          String?
+  company        String?
+  rawText        String   // full extracted JD text
+  requirements   String[] // parsed bullet-level requirements
+  responsibilities String[]
+  keywords       String[]
+  createdAt      DateTime @default(now())
+
+  resumes GeneratedResume[]
+}
+
+model GeneratedResume {
+  id               String   @id @default(cuid())
+  profileId        String
+  profile          Profile  @relation(fields: [profileId], references: [id])
+  jobDescriptionId String
+  jobDescription   JobDescription @relation(fields: [jobDescriptionId], references: [id])
+  tailoredContent  Json     // structured resume: { summary, workExperience: [...], skills: [...] }
+  gapNotes         String?  // LLM's notes on JD requirements the profile doesn't clearly cover
+  status           String   @default("draft") // draft | applied | interviewing | rejected | offer
+  createdAt        DateTime @default(now())
+}
