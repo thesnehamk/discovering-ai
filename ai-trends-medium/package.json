@@ -1,0 +1,22 @@
+{
+  "name": "ai-trends-medium",
+  "version": "1.0.0",
+  "description": "Daily AI trends research + first-draft generator for Medium",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js",
+    "dry-run": "node src/index.js --dry-run",
+    "local": "node --env-file=.env src/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20.6"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest",
+    "fast-xml-parser": "^5.11.1",
+    "marked": "^14.1.0",
+    "nodemailer": "^10.0.3"
+  }
+}
