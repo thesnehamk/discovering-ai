@@ -1,0 +1,43 @@
+name: Daily AI Trends Draft
+
+on:
+  schedule:
+    - cron: "30 0 * * *" # 00:30 UTC = 6:00 AM IST, every day
+  workflow_dispatch: # adds a "Run workflow" button for manual runs
+
+permissions:
+  contents: write # lets the job commit the draft back to the repo
+
+concurrency:
+  group: daily-draft
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npm install --no-audit --no-fund
+
+      - name: Collect news and write draft
+        run: npm start
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          MEDIUM_TOKEN: ${{ secrets.MEDIUM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Save draft to the repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add drafts data
+          git diff --staged --quiet || (git commit -m "Draft for $(TZ=Asia/Kolkata date +%F)" && git push)
