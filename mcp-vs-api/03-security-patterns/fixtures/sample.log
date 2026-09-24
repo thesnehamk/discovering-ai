@@ -1,0 +1,8 @@
+2026-09-24T08:00:01Z INFO  server started on port 3000
+2026-09-24T08:00:15Z INFO  user login user_id=42
+2026-09-24T08:01:03Z ERROR failed to connect to database: timeout after 5000ms
+2026-09-24T08:01:04Z INFO  retrying database connection
+2026-09-24T08:01:05Z INFO  database connection established
+2026-09-24T08:02:30Z WARN  slow query detected: 1240ms
+2026-09-24T08:03:11Z ERROR unhandled exception in request handler
+2026-09-24T08:04:00Z INFO  scheduled backup completed

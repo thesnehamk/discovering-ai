@@ -1,0 +1,20 @@
+{
+  "name": "context-cost-benchmark",
+  "version": "1.0.0",
+  "description": "Measures, with a real tokenizer, the context-window cost of dumping every MCP tool schema into a session vs. a progressive/lazy-disclosure pattern (one small search_tools meta-tool, full schemas loaded only for tools relevant to the current task). Reproduces the mechanism behind the post's '50K token GitHub MCP init cost' and '81% context waste on a 100+ tool server' claims with our own measured numbers.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "benchmark": "npm run build && node dist/benchmark.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "gpt-tokenizer": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}

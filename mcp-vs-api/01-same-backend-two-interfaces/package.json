@@ -1,0 +1,25 @@
+{
+  "name": "same-backend-two-interfaces",
+  "version": "1.0.0",
+  "description": "Demonstrates the core claim of 'MCP vs API Explained': the same weather-lookup service function exposed both as a plain REST endpoint and as an MCP tool. MCP doesn't replace the API — it's a thin adapter in front of the exact same code path.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "api": "node dist/api/server.js",
+    "mcp": "node dist/mcp/server.js",
+    "mcp:inspect": "npm run build && npx @modelcontextprotocol/inspector node dist/mcp/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "express": "^4.21.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}
