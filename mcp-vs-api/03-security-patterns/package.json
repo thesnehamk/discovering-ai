@@ -1,0 +1,23 @@
+{
+  "name": "mcp-security-patterns",
+  "version": "1.0.0",
+  "description": "A command-injection-vulnerable MCP tool handler next to a hardened one, backing the post's claim that independent testing found command injection flaws in 43% of tested MCP implementations. Self-contained, no real target, proves the vulnerability with a harmless echo payload rather than anything destructive.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "demo": "npm run build && node dist/runComparison.js",
+    "mcp": "node dist/server.js",
+    "mcp:inspect": "npm run build && npx @modelcontextprotocol/inspector node dist/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}
