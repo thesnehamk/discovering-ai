@@ -1,0 +1,33 @@
+{
+  "name": "mcp-task-server",
+  "version": "1.0.0",
+  "description": "MCP server exposing task-management operations as agent-callable tools, with a repository-pattern storage layer that swaps from in-memory to DynamoDB without touching the tool interface.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-task-server": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "test": "node --import tsx --test test/**/*.test.ts",
+    "clean": "rm -rf dist",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.699.0",
+    "@aws-sdk/lib-dynamodb": "^3.699.0",
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "uuid": "^11.0.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
